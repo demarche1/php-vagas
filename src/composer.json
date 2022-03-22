@@ -1,0 +1,9 @@
+{
+    "name": "php-vagas",
+    "autoload": {
+        "psr-4": {
+            "Root\\Html\\": "src/"
+        }
+    },
+    "require": {}
+}

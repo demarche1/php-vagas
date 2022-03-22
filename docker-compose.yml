@@ -19,6 +19,7 @@ services:
             MYSQL_DATABASE: php_vagas
             MYSQL_USER: php_vagas_admin
             MYSQL_PASSWORD: php_vagas_admin_password
+            MYSQL_ROOT_PASSWORD: root
         ports:
             - "9906:3306"
     phpmyadmin:
