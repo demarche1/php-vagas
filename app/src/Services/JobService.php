@@ -15,6 +15,12 @@ class JobService
         $this->dbConnection = new Database('jobs');
     }
 
+    /**
+     * Call querybuilder to insert a job to DB.
+     *
+     * @param Job $job
+     * @return interger
+     */
     public function registerJob($job)
     {
         return $this->dbConnection->insert(
@@ -27,6 +33,14 @@ class JobService
         );
     }
 
+    /**
+     * Retrieves array of job intances
+     *
+     * @param string | null $where
+     * @param string | null $order
+     * @param string | null $limit
+     * @return Job[]
+     */
     public function getJobs($where = null, $order = null, $limit = null)
     {
         $job = new Job();

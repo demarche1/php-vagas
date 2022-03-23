@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Validate if is a valid register.
+ *
+ * @param string $title
+ * @param string $description
+ * @param string $active
+ * @return boolean
+ */
 function isValidRegister($title, $description, $active)
 {
     return

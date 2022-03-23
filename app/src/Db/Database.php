@@ -8,23 +8,28 @@ use \PDOException;
 class Database
 {
     const HOST = 'db';
-
     const NAME = 'php_vagas';
-
     const USER = 'php_vagas_admin';
-
     const PASS = 'php_vagas_admin_password';
-
     private $table;
-
     private $connection;
 
+    /**
+     * Class contructor.
+     *
+     * @param string $table
+     */
     public function __construct($table = null)
     {
         $this->table = $table;
         $this->setConnection();
     }
 
+    /**
+     * Set connection into class params
+     *
+     * @return void
+     */
     private function setConnection()
     {
         try {
@@ -35,6 +40,13 @@ class Database
         }
     }
 
+    /**
+     * Prepare and execute query
+     *
+     * @param string $query
+     * @param array $params
+     * @return PDOStatement
+     */
     private function execute($query, $params = [])
     {
         $statement = $this->connection->prepare($query);
@@ -42,6 +54,12 @@ class Database
         return $statement;
     }
 
+    /**
+     * Insert values into database.
+     *
+     * @param array $values
+     * @return integer
+     */
     public function insert($values)
     {
         $fields = array_keys($values);
@@ -54,6 +72,14 @@ class Database
         return $this->connection->lastInsertId();
     }
 
+    /**
+     * Select and return values from database.
+     *
+     * @param string | null $where
+     * @param string | null $order
+     * @param string | null $limit
+     * @return PDOStatement
+     */
     public function select($where = null, $order = null, $limit = null)
     {
         $where = strlen($where) ? "WHERE $where"    : '';
