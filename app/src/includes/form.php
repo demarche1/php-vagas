@@ -39,7 +39,7 @@
         </div>
 
         <div class="form-group mt-3">
-            <button class="btn btn-success" type="submit">Cadastrar</button>
+            <button class="btn btn-success" name="send" type="submit">Cadastrar</button>
         </div>
     </form>
 </section>

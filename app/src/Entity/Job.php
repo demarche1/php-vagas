@@ -10,8 +10,8 @@ class Job
     public $active;
     public $date;
 
-    public function __construct()
+    public function __toString()
     {
-        $this->date = date('Y-m-d H:i:s');
+        return self::class;
     }
 }
