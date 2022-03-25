@@ -19,7 +19,7 @@ class JobService
      * Call querybuilder to insert a job to DB.
      *
      * @param Job $job
-     * @return interger
+     * @return integer
      */
     public function registerJob($job)
     {
@@ -49,5 +49,46 @@ class JobService
             ->dbConnection
             ->select($where, $order, $limit)
             ->fetchAll(PDO::FETCH_CLASS, $job->__toString());
+    }
+
+    /**
+     * Get job by ID from DB.
+     *
+     * @param integer $id
+     * @return Job
+     */
+    public function getJobById($id)
+    {
+        $job = new Job();
+
+        return $this
+            ->dbConnection
+            ->select("id = $id")
+            ->fetchObject($job->__toString());
+    }
+
+    /**
+     * Update job.
+     *
+     * @param Job $job
+     * @return boolean
+     */
+    public function updateJob($job)
+    {
+        return $this
+            ->dbConnection
+            ->update(
+                "id = $job->id",
+                [
+                    'title'       => $job->title,
+                    'description' => $job->description,
+                    'active'      => $job->active
+                ]
+            );
+    }
+
+    public function deleteJob($id)
+    {
+        return $this->dbConnection->delete("id = $id");
     }
 }

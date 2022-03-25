@@ -91,4 +91,42 @@ class Database
 
         return $this->execute($query);
     }
+
+    /**
+     * Update values from database.
+     *
+     * @param string $where
+     * @param array $values
+     * @return boolean
+     */
+    public function update($where, $values)
+    {
+        $params = array_values($values);
+        $values = array_keys($values);
+        $values = array_map(function ($value) {
+            return "$value=?";
+        }, $values);
+        $values = implode(',', $values);
+
+        $query = "UPDATE $this->table SET $values WHERE $where";
+
+        $this->execute($query, $params);
+
+        return true;
+    }
+
+    /**
+     * Delete some value from database.
+     *
+     * @param string $where
+     * @return boolean
+     */
+    public function delete($where)
+    {
+        $query = "DELETE FROM $this->table WHERE $where";
+
+        $this->execute($query);
+
+        return true;
+    }
 }
