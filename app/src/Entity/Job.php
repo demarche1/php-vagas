@@ -10,8 +10,17 @@ class Job
     public $active;
     public $date;
 
-    public function __toString()
+    public function isValid()
     {
-        return self::class;
+        return
+            isset($this->title)           &&
+            isset($this->description)     &&
+            isset($this->active)          &&
+            is_string($this->title)       &&
+            is_string($this->description) &&
+            is_string($this->active)      &&
+            !empty($this->title)          &&
+            !empty($this->description)    &&
+            !empty($this->active);
     }
 }

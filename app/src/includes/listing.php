@@ -1,7 +1,5 @@
 <?php
 
-$jobList = '';
-
 function showMessage()
 {
     $message = '';
@@ -29,6 +27,12 @@ function isModalOpen()
         is_numeric($_GET['id']);
 }
 
+if (isModalOpen()) {
+    include __DIR__ . '/delete-modal.php';
+}
+
+// Jobs list
+$jobList = '';
 foreach ($jobs as $job) {
     $jobList .= '<tr>
                     <td>' . $job->title . '</td>
@@ -54,14 +58,39 @@ foreach ($jobs as $job) {
                  </tr>';
 }
 
-if (isModalOpen()) {
-    include __DIR__ . '/delete-modal.php';
+$jobList = strlen($jobList)
+    ? $jobList
+    : '<tr><td colspan="6" class="text-center">Nenhum resultado encontrado</td></tr>';
+
+// GETS
+unset($_GET['page']);
+$gets = http_build_query($_GET) ? '&' . http_build_query($_GET) : '';
+
+// pagination
+$pages      = $paginationService->getPages();
+$pagination = '
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href=?page=' . $currentPage - 1 . $gets . '>Previous</a></li>
+        ';
+
+foreach ($pages as $page) {
+    $active = $page['currentPage'] ? 'active' : '';
+
+    $pagination .= '
+        <li class="page-item ' . $active . '"><a class="page-link" href=?page=' . $page['page'] . $gets . '>' . $page['page'] . '</a></li>
+    ';
 }
 
-echo showMessage();
+$pagination .= '
+                <li class="page-item"><a class="page-link" href=?page=' . $currentPage + 1 . $gets . '>Next</a></li>
+            </ul>
+        </nav>';
+
 ?>
 
 <section class="mt-3">
+    <?php echo showMessage(); ?>
     <a href="/register.php">
         <butto class="btn btn-success">
             Nova vaga
@@ -75,6 +104,14 @@ echo showMessage();
             <div class="col">
                 <input class="form-control" type="text" name="search" placeholder="Buscar por vaga"
                     value="<?php echo $search ?>">
+            </div>
+
+            <div class="col">
+                <select class="form-control" name="active">
+                    <option value="">Todos</option>
+                    <option value="y" <?php echo $status === 'y' ? 'selected' : '' ?>>Ativos</option>
+                    <option value="n" <?php echo $status === 'n' ? 'selected' : '' ?>>Inativos</option>
+                </select>
             </div>
 
             <div class="col">
@@ -107,4 +144,8 @@ echo showMessage();
             <?php echo $jobList ?>
         </tbody>
     </table>
+</section>
+
+<section>
+    <?php echo $pagination; ?>
 </section>

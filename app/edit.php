@@ -2,7 +2,6 @@
 
 
 require_once __DIR__ . "/vendor/autoload.php";
-require __DIR__ . "/src/utils/validateRegister.php";
 
 use \Root\Html\Entity\Job;
 use \Root\Html\Services\JobService;
@@ -27,7 +26,7 @@ $title       = filter_input(INPUT_POST, 'title');
 $description = filter_input(INPUT_POST, 'description');
 $active      = filter_input(INPUT_POST, 'active');
 
-if (isValidRegister($title, $description, $active)) {
+if (isset($_POST['send']) && $job->isValid()) {
     $job->title       = $title;
     $job->description = $description;
     $job->active      = $active;

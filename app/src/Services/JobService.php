@@ -43,12 +43,27 @@ class JobService
      */
     public function getJobs($where = null, $order = null, $limit = null)
     {
-        $job = new Job();
-
         return $this
             ->dbConnection
             ->select($where, $order, $limit)
-            ->fetchAll(PDO::FETCH_CLASS, $job->__toString());
+            ->fetchAll(PDO::FETCH_CLASS, Job::class);
+    }
+
+    /**
+     * Retrieves quantity of jobs
+     *
+     * @param string | null $where
+     * @param string | null $order
+     * @param string | null $limit
+     * @return integer
+     */
+    public function getJobsQuantity($where = null)
+    {
+        return $this
+            ->dbConnection
+            ->select($where, null, null, 'COUNT(*) as quantity')
+            ->fetchObject()
+            ->quantity;
     }
 
     /**
@@ -59,12 +74,10 @@ class JobService
      */
     public function getJobById($id)
     {
-        $job = new Job();
-
         return $this
             ->dbConnection
             ->select("id = $id")
-            ->fetchObject($job->__toString());
+            ->fetchObject(Job::class);
     }
 
     /**

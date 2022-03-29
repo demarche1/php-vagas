@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . "/vendor/autoload.php";
-require __DIR__ . "/src/utils/validateRegister.php";
 
 use \Root\Html\Entity\Job;
 use \Root\Html\Services\JobService;
@@ -14,15 +13,15 @@ if (isset($_POST['send'])) {
     $description = filter_input(INPUT_POST, 'description');
     $active      = filter_input(INPUT_POST, 'active');
 
-    if (!isValidRegister($title, $description, $active)) {
-        header('Location: index.php?status=error');
-        exit;
-    };
-
     $job->title       = $title;
     $job->description = $description;
     $job->active      = $active;
     $job->date        = date('Y-m-d H:i:s');
+
+    if (!$job->isValid()) {
+        header('Location: index.php?status=error');
+        exit;
+    };
 
     $jobService = new JobService();
     $job->id = $jobService->registerJob($job);
