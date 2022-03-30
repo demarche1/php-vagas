@@ -1,8 +1,5 @@
 <?php
-
-
 require_once __DIR__ . "/vendor/autoload.php";
-require __DIR__ . "/src/utils/validateRegister.php";
 
 use \Root\Html\Entity\Job;
 use \Root\Html\Services\JobService;

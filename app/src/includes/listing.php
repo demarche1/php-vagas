@@ -91,10 +91,10 @@ $pagination .= '
 
 <section class="mt-3">
     <?php echo showMessage(); ?>
-    <a href="/register.php">
-        <butto class="btn btn-success">
+    <a href="/register-job.php">
+        <button class="btn btn-success">
             Nova vaga
-        </butto>
+        </button>
     </a>
 </section>
 

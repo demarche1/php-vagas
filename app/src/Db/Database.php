@@ -59,6 +59,7 @@ class Database
      *
      * @param array $values
      * @return integer
+     * @example values param must be assoc array [$key => $value]
      */
     public function insert($values)
     {

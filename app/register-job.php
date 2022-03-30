@@ -1,9 +1,11 @@
 <?php
-
 require_once __DIR__ . "/vendor/autoload.php";
 
 use \Root\Html\Entity\Job;
 use \Root\Html\Services\JobService;
+use \Root\Html\Session\Login;
+
+Login::requireLogin();
 
 const PAGE_TITLE = 'Cadastrar vaga';
 $job             = new Job();

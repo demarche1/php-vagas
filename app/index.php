@@ -22,9 +22,9 @@ $jobsQuantity = $jobService->getJobsQuantity($where);
 
 $currentPage = $_GET['page'] ?? 1;
 
-$paginationService = new PaginationService($jobsQuantity, $currentPage, 3);
+$paginationService = new PaginationService($jobsQuantity, $currentPage, $limit = 3);
 
-$jobs = $jobService->getJobs($where, null, $paginationService->getLimit());
+$jobs = $jobService->getJobs($where, $order = null, $paginationService->getLimit());
 
 include __DIR__ . "/src/includes/header.php";
 require __DIR__ . "/src/includes/listing.php";
