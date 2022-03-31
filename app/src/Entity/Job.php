@@ -10,7 +10,7 @@ class Job
     public $active;
     public $date;
 
-    public function isValid()
+    public function isValid(): bool
     {
         return
             isset($this->title)           &&

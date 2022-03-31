@@ -25,7 +25,7 @@ class PaginationService
     private function calculatePages()
     {
         $this->totalPages  = $this->results > 0 ? ceil($this->results / $this->limit) : 1;
-        $this->currentPage = $this->currentPage <= $this->totalPages ? $this->currentPage : $this->totalPages;
+        $this->currentPage = min($this->currentPage, $this->totalPages);
     }
 
     /**
@@ -33,7 +33,7 @@ class PaginationService
      *
      * @return string
      */
-    public function getLimit()
+    public function getLimit(): string
     {
         $offset = ($this->limit * ($this->currentPage - 1));
 
@@ -45,7 +45,7 @@ class PaginationService
      *
      * @return array
      */
-    public function getPages()
+    public function getPages(): array
     {
         if ($this->totalPages == 1) return [];
 

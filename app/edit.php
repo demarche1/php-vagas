@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/vendor/autoload.php";
+require_once __DIR__ . "/src/utils/validations.php";
 
 use \Root\Html\Entity\Job;
 use \Root\Html\Services\JobService;
@@ -9,7 +10,7 @@ Login::requireLogin();
 
 const PAGE_TITLE = 'Editar vaga';
 
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+if (!hasIdIntoUrlParams()) {
     header('Location: index.php?status=error');
     exit;
 }

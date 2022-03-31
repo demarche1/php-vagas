@@ -4,11 +4,10 @@ namespace Root\Html\Services;
 
 use \Root\Html\Db\Database;
 use \Root\Html\Entity\User;
-use \PDO;
 
 class UserService
 {
-    private $dbConnection;
+    private Database $dbConnection;
 
     public function __construct()
     {
@@ -16,12 +15,12 @@ class UserService
     }
 
     /**
-     * Call querybuilder to insert a user to DB.
+     * Call query-builder to insert a user to DB.
      *
      * @param User $user
      * @return integer
      */
-    public function registerUser($user)
+    public function registerUser(User $user): int
     {
         return $this->dbConnection->insert(
             [
@@ -36,71 +35,13 @@ class UserService
      * Get User by email from DB.
      *
      * @param string $email
-     * @return User
+     * @return User|bool
      */
-    public function getUserByEmail($email)
+    public function getUserByEmail(string $email): User|bool
     {
         return $this
             ->dbConnection
             ->select("email = '$email'")
             ->fetchObject(User::class);
-    }
-
-    /**
-     * Retrieves array of job intances
-     *
-     * @param string | null $where
-     * @param string | null $order
-     * @param string | null $limit
-     * @return Job[]
-     */
-    public function getJobs($where = null, $order = null, $limit = null)
-    {
-        return $this
-            ->dbConnection
-            ->select($where, $order, $limit)
-            ->fetchAll(PDO::FETCH_CLASS, Job::class);
-    }
-
-    /**
-     * Retrieves quantity of jobs
-     *
-     * @param string | null $where
-     * @param string | null $order
-     * @param string | null $limit
-     * @return integer
-     */
-    public function getJobsQuantity($where = null)
-    {
-        return $this
-            ->dbConnection
-            ->select($where, null, null, 'COUNT(*) as quantity')
-            ->fetchObject()
-            ->quantity;
-    }
-
-    /**
-     * Update job.
-     *
-     * @param Job $job
-     * @return boolean
-     */
-    public function updateJob($job)
-    {
-        return $this
-            ->dbConnection
-            ->update(
-                "id = $job->id",
-                [
-                    'title'       => $job->title,
-                    'description' => $job->description,
-                    'active'      => $job->active
-                ]
-            );
-    }
-
-    public function deleteJob($id)
-    {
-        return $this->dbConnection->delete("id = $id");
     }
 }

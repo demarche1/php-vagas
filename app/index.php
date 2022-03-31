@@ -3,7 +3,7 @@
 require __DIR__ . "/vendor/autoload.php";
 
 use \Root\Html\Services\JobService;
-use Root\Html\Services\PaginationService;
+use \Root\Html\Services\PaginationService;
 
 $search = filter_input(INPUT_GET, 'search');
 $status = filter_input(INPUT_GET, 'active');
@@ -22,7 +22,7 @@ $jobsQuantity = $jobService->getJobsQuantity($where);
 
 $currentPage = $_GET['page'] ?? 1;
 
-$paginationService = new PaginationService($jobsQuantity, $currentPage, $limit = 3);
+$paginationService = new PaginationService($jobsQuantity, $currentPage, $limit = 5);
 
 $jobs = $jobService->getJobs($where, $order = null, $paginationService->getLimit());
 

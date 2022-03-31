@@ -4,6 +4,7 @@ namespace Root\Html\Db;
 
 use \PDO;
 use \PDOException;
+use \PDOStatement;
 
 class Database
 {
@@ -15,11 +16,11 @@ class Database
     private $connection;
 
     /**
-     * Class contructor.
+     * Class constructor.
      *
      * @param string $table
      */
-    public function __construct($table = null)
+    public function __construct(string $table = null)
     {
         $this->table = $table;
         $this->setConnection();
@@ -47,7 +48,7 @@ class Database
      * @param array $params
      * @return PDOStatement
      */
-    private function execute($query, $params = [])
+    private function execute(string $query, array $params = []): PDOStatement
     {
         $statement = $this->connection->prepare($query);
         $statement->execute($params);
@@ -61,7 +62,7 @@ class Database
      * @return integer
      * @example values param must be assoc array [$key => $value]
      */
-    public function insert($values)
+    public function insert(array $values): int
     {
         $fields = array_keys($values);
         $params = array_values($values);
@@ -79,9 +80,10 @@ class Database
      * @param string | null $where
      * @param string | null $order
      * @param string | null $limit
+     * @param string $fields
      * @return PDOStatement
      */
-    public function select($where = null, $order = null, $limit = null, $fields = '*')
+    public function select(string $where = null, string $order = null, string $limit = null, string $fields = '*'): PDOStatement
     {
         $where = strlen($where) ? "WHERE $where"    : '';
         $order = strlen($order) ? "ORDER BY $order" : '';
@@ -100,7 +102,7 @@ class Database
      * @param array $values
      * @return boolean
      */
-    public function update($where, $values)
+    public function update(string $where, array $values): bool
     {
         $params = array_values($values);
         $values = array_keys($values);
@@ -122,7 +124,7 @@ class Database
      * @param string $where
      * @return boolean
      */
-    public function delete($where)
+    public function delete(string $where): bool
     {
         $query = "DELETE FROM $this->table WHERE $where";
 

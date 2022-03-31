@@ -1,3 +1,10 @@
+<?php
+
+use \Root\Html\Session\Login;
+
+$loggedUser = Login::getLoggedInUser();
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -12,6 +19,29 @@
 <body class="bg-dark text-light">
     <div class="container">
         <header class="bg-success p-2" style="--bs-bg-opacity: .5;">
-            <h1>PHP Vagas</h1>
+            <a class="text-light" href="index.php"><h1 >PHP Vagas</h1></a>
+
             <p>Exemplo de CRUD em PHP OOP</p>
         </header>
+
+        <section class="d-flex justify-content-end">
+            <?php
+                if ($loggedUser) {
+                    echo '
+                        <div class="dropdown">
+                            <p class="dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                Olá '. $loggedUser["name"] .'
+                            </p>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/logout.php">Sair</a></li>
+                            </ul>
+                        </div>
+                    ';
+                } else {
+                    echo '
+                        <a class="text-light" href="login.php">Entrar</a>
+                    ';
+                }
+            ?>
+        </section>
+

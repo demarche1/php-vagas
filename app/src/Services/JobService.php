@@ -8,7 +8,7 @@ use \PDO;
 
 class JobService
 {
-    private $dbConnection;
+    private Database $dbConnection;
 
     public function __construct()
     {
@@ -16,12 +16,12 @@ class JobService
     }
 
     /**
-     * Call querybuilder to insert a job to DB.
+     * Call query-builder to insert a job to DB.
      *
      * @param Job $job
      * @return integer
      */
-    public function registerJob($job)
+    public function registerJob(Job $job): int
     {
         return $this->dbConnection->insert(
             [
@@ -34,14 +34,14 @@ class JobService
     }
 
     /**
-     * Retrieves array of job intances
+     * Retrieves array of job instances
      *
      * @param string | null $where
      * @param string | null $order
      * @param string | null $limit
      * @return Job[]
      */
-    public function getJobs($where = null, $order = null, $limit = null)
+    public function getJobs(string $where = null, string $order = null, string $limit = null): array
     {
         return $this
             ->dbConnection
@@ -53,11 +53,9 @@ class JobService
      * Retrieves quantity of jobs
      *
      * @param string | null $where
-     * @param string | null $order
-     * @param string | null $limit
      * @return integer
      */
-    public function getJobsQuantity($where = null)
+    public function getJobsQuantity(string $where = null): int
     {
         return $this
             ->dbConnection
@@ -72,7 +70,7 @@ class JobService
      * @param integer $id
      * @return Job
      */
-    public function getJobById($id)
+    public function getJobById(int $id): Job
     {
         return $this
             ->dbConnection
@@ -86,7 +84,7 @@ class JobService
      * @param Job $job
      * @return boolean
      */
-    public function updateJob($job)
+    public function updateJob(Job $job): bool
     {
         return $this
             ->dbConnection
@@ -100,7 +98,13 @@ class JobService
             );
     }
 
-    public function deleteJob($id)
+    /**
+     * Delete Job from DB.
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function deleteJob(int $id): bool
     {
         return $this->dbConnection->delete("id = $id");
     }

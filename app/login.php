@@ -17,34 +17,32 @@ if (isset($_POST['send'])) {
         $user = $userService->getUserByEmail($email);
 
         if (!$user instanceof User || !password_verify($password, $user->password)) {
-            header('Location: login.php?status=error&loginError=Email ou senha inválida');
+            header('Location: login.php?status=error&loginError=true');
             exit;
         }
 
-        header('Location: login.php?status=error&loginSuccess=Usuário logado');
-        exit;
+        Login::login($user);
     }
 
     if ($_POST['send'] === 'register') {
         $user = new User();
         $user->name     = filter_input(INPUT_POST, 'name');
         $user->email    = filter_input(INPUT_POST, 'email');
-        $user->password = password_hash(filter_input(INPUT_POST, 'password'), PASSWORD_DEFAULT);
+        $user->password = filter_input(INPUT_POST, 'password');
 
         if (!$user->isValid()) {
-            header('Location: login.php?status=error&registerError=Não foi possível registrar usuário');
-            $registerMessage = '';
+            header('Location: login.php?status=error&registerError=true');
             exit;
         }
 
-        $user->id = $userService->registerUser($user);
+        $user->hashPassword();
 
-        if (!$user->id) {
-            header('Location: login.php?status=error&registerError=Não foi possível registrar usuário');
+        if (!$user->id = $userService->registerUser($user)) {
+            header('Location: login.php?status=error&registerError=true');
             exit;
         }
 
-        header('Location: index.php?status=success&registerSucces=Usuário cadastrado com sucesso');
+        header('Location: index.php?status=success&registerSuccess=true');
         exit;
     }
 }
