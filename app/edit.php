@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/vendor/autoload.php";
-require_once __DIR__ . "/src/utils/validations.php";
+require_once __DIR__ . "/src/utils/functions.php";
 
 use \Root\Html\Entity\Job;
 use \Root\Html\Services\JobService;
@@ -38,7 +38,7 @@ if (isset($_POST['send']) && $job->isValid()) {
         exit;
     }
 
-    header('Location: index.php?status=success');
+    header('Location: user-jobs.php?status=success');
     exit;
 }
 

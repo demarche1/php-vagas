@@ -34,6 +34,7 @@ $loggedUser = Login::getLoggedInUser();
                             </p>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/logout.php">Sair</a></li>
+                                <li><a class="dropdown-item" href="/user-jobs.php">Meus Cadastros</a></li>
                             </ul>
                         </div>
                     ';

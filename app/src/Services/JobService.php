@@ -28,7 +28,8 @@ class JobService
                 'title'       => $job->title,
                 'description' => $job->description,
                 'active'      => $job->active,
-                'date'        => $job->date
+                'date'        => $job->date,
+                'user_id'     => $job->user_id
             ]
         );
     }

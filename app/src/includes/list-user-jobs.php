@@ -39,6 +39,22 @@ foreach ($jobs as $job) {
                     <td>' . $job->description . '</td>
                     <td>' . ($job->active === 'y' ? 'Ativo' : 'Inativo') . '</td>
                     <td>' . date('d/m/Y à\s H:i:s', strtotime($job->date)) . '</td>
+                    <td class="d-flex">
+                        <div>
+                            <form method="GET" action="/edit.php">
+                                <input type=text style="display: none;" name="id" value="' . $job->id . '" >
+                                <button type="submit" class="btn btn-primary">Editar</button>
+                            </form>
+                        </div>
+                        <div class="ms-1">
+                            <form method="GET">
+                                <input type=text style="display: none;" name="title" value="' . $job->title . '" >
+                                <input type=text style="display: none;" name="id" value="' . $job->id . '" >
+                                <input type=text style="display: none;" name="deleteModalOpen" value="true" >
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            </form>
+                        </div>
+                    </td>
                  </tr>';
 }
 
@@ -87,7 +103,7 @@ $pagination .= '
         <div class="row">
             <div class="col">
                 <input class="form-control" type="text" name="search" placeholder="Buscar por vaga"
-                    value="<?php echo $search ?>">
+                       value="<?php echo $search ?>">
             </div>
 
             <div class="col">
@@ -108,24 +124,24 @@ $pagination .= '
 <section>
     <table class="table bg-light mt-3">
         <thead>
-            <tr>
-                <th>
-                    Titulo
-                </th>
-                <th>
-                    Descrição
-                </th>
-                <th>
-                    Situação
-                </th>
-                <th>
-                    Data
-                </th>
-            </tr>
+        <tr>
+            <th>
+                Titulo
+            </th>
+            <th>
+                Descrição
+            </th>
+            <th>
+                Situação
+            </th>
+            <th>
+                Data
+            </th>
+        </tr>
         </thead>
 
         <tbody>
-            <?php echo $jobList ?>
+        <?php echo $jobList ?>
         </tbody>
     </table>
 </section>

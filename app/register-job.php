@@ -15,10 +15,13 @@ if (isset($_POST['send'])) {
     $description = filter_input(INPUT_POST, 'description');
     $active      = filter_input(INPUT_POST, 'active');
 
+    $loggedUser = Login::getLoggedInUser();
+
     $job->title       = $title;
     $job->description = $description;
     $job->active      = $active;
     $job->date        = date('Y-m-d H:i:s');
+    $job->user_id     = $loggedUser['id'];
 
     if (!$job->isValid()) {
         header('Location: index.php?status=error');

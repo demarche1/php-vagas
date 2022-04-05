@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/vendor/autoload.php";
-require_once __DIR__ . "/src/utils/validations.php";
+require_once __DIR__ . "/src/utils/functions.php";
 
 use \Root\Html\Entity\Job;
 use \Root\Html\Services\JobService;

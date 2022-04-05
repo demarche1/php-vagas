@@ -9,6 +9,7 @@ class Job
     public $description;
     public $active;
     public $date;
+    public $user_id;
 
     public function isValid(): bool
     {
@@ -16,11 +17,14 @@ class Job
             isset($this->title)           &&
             isset($this->description)     &&
             isset($this->active)          &&
+            isset($this->user_id)         &&
             is_string($this->title)       &&
             is_string($this->description) &&
             is_string($this->active)      &&
+            is_string($this->user_id)     &&
             !empty($this->title)          &&
             !empty($this->description)    &&
-            !empty($this->active);
+            !empty($this->active)         &&
+            !empty($this->user_id);
     }
 }

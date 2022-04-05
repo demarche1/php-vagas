@@ -8,11 +8,12 @@ use \Root\Html\Session\Login;
 Login::requireLogout();
 
 if (isset($_POST['send'])) {
-    $userService = new UserService();
 
     if ($_POST['send'] === 'login') {
         $email    = filter_input(INPUT_POST, 'email');
         $password = filter_input(INPUT_POST, 'password');
+
+        $userService = new UserService();
 
         $user = $userService->getUserByEmail($email);
 
